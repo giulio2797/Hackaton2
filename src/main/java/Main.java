@@ -1,16 +1,30 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.model.GeocodingResult;
 
-public class Main
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class Main extends Application
 {
-    public static void main(String[] args)
-    {
-        GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyBqIHo3LmmfthV8q0tpibDuNy7DfBlgUE0").build();
-        GeocodingResult[] results =  GeocodingApi.geocode(context,"1600 Amphitheatre Parkway Mountain View, CA 94043").await();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(results[0].addressComponents));
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/com/lynden/example/latlong/Scene.fxml"));
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        stage.setTitle("JavaFX and Maven");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
