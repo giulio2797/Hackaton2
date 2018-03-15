@@ -37,7 +37,7 @@ public class LatLongFXMLController implements Initializable {
     protected void configureMap() {
         MapOptions mapOptions = new MapOptions();
 
-        mapOptions.center(new LatLong(47.6097, -122.3331))
+        mapOptions.center(new LatLong(46.071358, 11.124731))
                 .mapType(MapTypeIdEnum.ROADMAP)
                 .zoom(9);
         map = googleMapView.createMap(mapOptions, false);
