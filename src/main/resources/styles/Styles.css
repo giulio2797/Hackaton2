@@ -1,3 +1,8 @@
 .button {
     -fx-font-weight: bold;
 }
+.pane {
+    -fx-background-color: #bababa;
+    -fx-background-radius: 25;
+    -fx-opacity: 0.9;
+}
