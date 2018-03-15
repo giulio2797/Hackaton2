@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBConnector {
 
-    public static Connection connect (String host, int port, String dbName, String user, String psw){
+    public Connection connect (String host, int port, String dbName, String user, String psw){
         Connection DBConn = null;
         try {
             String dbString = null;
@@ -17,14 +17,25 @@ public class DBConnector {
         return DBConn;
     }
 
-    private static void executeStatement(String s, Connection con){
+    public void executeStatement(String command, Connection con){
         try{
             Statement stmt = con.createStatement();
-            stmt.execute(s);
+            stmt.execute(command);
             stmt.close();
         }catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("Query: "+s);
+            throw new RuntimeException("Query: "+command);
+        }
+    }
+
+    public ResultSet executeQuery(String query, Connection con){
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet results = stmt.executeQuery(query);
+            return results;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

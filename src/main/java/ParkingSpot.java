@@ -2,14 +2,23 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
+import java.util.Date;
+
 public class ParkingSpot {
+    int filareId;
     int id;
+    Date arrivalTime;
+    String targa;
     boolean occupied = false;
     float lat;
     float lon;
     Marker marker;
 
-    ParkingSpot(float lat, float lon, boolean occupied){
+    ParkingSpot(int filareId, int id, Date arrivalTime, String targa, float lat, float lon, boolean occupied){
+        this.id = id;
+        this.filareId = filareId;
+        this.arrivalTime=arrivalTime;
+        this.targa = targa;
         this.lat = lat;
         this.lon = lon;
         this.occupied = occupied;
