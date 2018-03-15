@@ -15,6 +15,7 @@ public class Main extends Application
 
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

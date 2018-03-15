@@ -2,10 +2,8 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.*;
+
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -37,16 +35,71 @@ public class LatLongFXMLController implements Initializable {
     protected void configureMap() {
         MapOptions mapOptions = new MapOptions();
 
-        mapOptions.center(new LatLong(46.071358, 11.124731))
+        mapOptions.center(new LatLong(46.071358, 11.124731))  //Trento centro
                 .mapType(MapTypeIdEnum.ROADMAP)
-                .zoom(9);
+                .zoom(14);
         map = googleMapView.createMap(mapOptions, false);
 
         map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
             LatLong latLong = event.getLatLong();
-            latitudeLabel.setText(formatter.format(latLong.getLatitude()));
-            longitudeLabel.setText(formatter.format(latLong.getLongitude()));
-        });
+            double lat = latLong.getLatitude();
+            double lon = latLong.getLongitude();
 
+            latitudeLabel.setText(formatter.format(lat));
+            longitudeLabel.setText(formatter.format(lon));
+            map.clearMarkers();
+            map.addMarker(createMarker(latLong));
+        });
+    }
+
+    private Marker createMarker(LatLong pos)
+    {
+        MarkerOptions options = new MarkerOptions();
+        options.position(pos);
+        Marker marker = new Marker(options);
+
+
+        return marker;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
