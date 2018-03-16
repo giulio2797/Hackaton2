@@ -77,8 +77,8 @@ public class LatLongFXMLController implements Initializable {
 
             latitudeLabel.setText(formatter.format(lat));
             longitudeLabel.setText(formatter.format(lon));
-//            map.clearMarkers();
-//            map.addMarker(createMarker(latLong));
+            map.clearMarkers();
+            map.addMarker(createMarker(latLong));
         });
     }
 
