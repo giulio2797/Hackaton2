@@ -8,7 +8,7 @@ public class DBConnector {
         Connection DBConn = null;
         try {
             String dbString = null;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.jdbc.Driver");
             dbString = "jdbc:mysql://" + host + "/" + dbName;
             DBConn = DriverManager.getConnection(dbString, user, psw);
         } catch (Exception e){
