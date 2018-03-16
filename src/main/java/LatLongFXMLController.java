@@ -52,11 +52,12 @@ public class LatLongFXMLController implements Initializable {
                         int filareId = results.getInt(1);
                         int id = results.getInt(2);
                         boolean occupied = results.getBoolean(1);
+                        //boolean resident = results.getBoolean(1);
                         Date arrivalTime = results.getTime(1);
                         String targa = results.getString(1);
                         float lat = results.getFloat(1);
                         float lon = results.getFloat(2);
-                        ParkingSpot parkingSpot = new ParkingSpot(filareId, id, arrivalTime, targa, lat, lon, occupied);
+                        ParkingSpot parkingSpot = new ParkingSpot(filareId, id, arrivalTime, targa, lat, lon, occupied, false);
                         Spots.add(parkingSpot);
                     }
                 } catch (Exception e) {
@@ -81,15 +82,30 @@ public class LatLongFXMLController implements Initializable {
             latitudeLabel.setText(formatter.format(lat));
             longitudeLabel.setText(formatter.format(lon));
             map.clearMarkers();
-            map.addMarker(createMarker(latLong));
+            map.addMarker(createMarker(latLong, 2));
         });
     }
 
-    private Marker createMarker(LatLong pos)
+    private Marker createMarker(LatLong pos, int type)
     {
         MarkerOptions options = new MarkerOptions();
         options.position(pos);
-        options.icon((new MarkerImageFactory()).createMarkerImage("/blue.png", "png"));
+
+        switch (type)
+        {
+            case 0:
+                options.icon((new MarkerImageFactory()).createMarkerImage("/blue.png", "png"));
+                break;
+            case 1:
+                options.icon((new MarkerImageFactory()).createMarkerImage("/red.png", "png"));
+                break;
+            case 2:
+                options.icon((new MarkerImageFactory()).createMarkerImage("/green.png", "png"));
+                break;
+            default:
+                break;
+        }
+
         Marker marker = new Marker(options);
 
 
