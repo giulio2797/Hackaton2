@@ -21,5 +21,6 @@
     <orderEntry type="library" name="Maven: com.lynden:GMapsFX:2.12.0" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.1" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:5.1.45" level="project" />
   </component>
 </module>
