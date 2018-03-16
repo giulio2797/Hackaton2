@@ -1,32 +1,31 @@
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-
 import java.util.Date;
 
 public class ParkingSpot {
-    int filareId;
     int id;
-    Date arrivalTime;
-    String targa;
-    boolean occupied = false;
-    boolean residente = false;
-    float lat;
-    float lon;
-    Marker marker;
+    boolean resident, used;
+    double lat, lon;
+    long arrivalTime;
+    String licencePlate;
 
-    ParkingSpot(int filareId, int id, Date arrivalTime, String targa, float lat, float lon, boolean occupied, boolean residente){
+
+    public ParkingSpot(int id, boolean resident, boolean used, double lat, double lon, long arrivalTime, String licencePlate) {
         this.id = id;
-        this.filareId = filareId;
-        this.arrivalTime=arrivalTime;
-        this.targa = targa;
+        this.resident = resident;
+        this.used = used;
         this.lat = lat;
         this.lon = lon;
-        this.occupied = occupied;
-        this.residente = residente;
-        MarkerOptions markerOptions = new MarkerOptions();
-        LatLong pos = new LatLong(lat, lon);
-        markerOptions.position(pos);
-        marker = new Marker(markerOptions);
+        if (used == false)
+        {
+            this.arrivalTime = -1;
+            this.licencePlate = "";
+        } else if (arrivalTime != -1)
+            {
+                this.arrivalTime = arrivalTime;
+                this.licencePlate = licencePlate;
+            } else
+                {
+                    this.arrivalTime = System.currentTimeMillis();
+                    this.licencePlate = licencePlate;
+                }
     }
 }

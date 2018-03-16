@@ -29,7 +29,7 @@ public class SQLiteHandler
         stat.executeUpdate("create table if not EXISTS parkings (id integer PRIMARY KEY , resident INTEGER , used INTEGER , lat DOUBLE , lon DOUBLE , arr INTEGER , plate text);");
     }
 
-    public void addData(ParkingSpotV2 data) throws Exception
+    public void addData(ParkingSpot data) throws Exception
     {
         PreparedStatement prep = conn.prepareStatement("insert into parkings values (?, ?, ?, ?, ?, ?, ?);");
 
@@ -49,11 +49,11 @@ public class SQLiteHandler
         System.out.println("ADD");
     }
 
-    public ParkingSpotV2 getSpot(int id) throws Exception
+    public ParkingSpot getSpot(int id) throws Exception
     {
         stat = conn.createStatement();
         ResultSet rs = stat.executeQuery("select * from parkings where id = " + id + ";");
-        ParkingSpotV2 tmp = new ParkingSpotV2(
+        ParkingSpot tmp = new ParkingSpot(
                 rs.getInt(1),
                 rs.getBoolean(2),
                 rs.getBoolean(3),
@@ -65,15 +65,15 @@ public class SQLiteHandler
         return tmp;
     }
 
-    public List<ParkingSpotV2> getAll() throws Exception
+    public List<ParkingSpot> getAll() throws Exception
     {
         stat = conn.createStatement();
         ResultSet rs = stat.executeQuery("select * from parkings;");
-        ParkingSpotV2 tmp;
-        List<ParkingSpotV2> list = new ArrayList<ParkingSpotV2>();
+        ParkingSpot tmp;
+        List<ParkingSpot> list = new ArrayList<ParkingSpot>();
         while(rs.next())
         {
-            tmp = new ParkingSpotV2(
+            tmp = new ParkingSpot(
                     rs.getInt(1),
                     rs.getBoolean(2),
                     rs.getBoolean(3),

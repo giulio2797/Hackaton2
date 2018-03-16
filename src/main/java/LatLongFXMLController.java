@@ -45,9 +45,9 @@ public class LatLongFXMLController implements Initializable {
         map = googleMapView.createMap(mapOptions, false);
 
         try {
-            ArrayList<ParkingSpotV2> spots = (ArrayList<ParkingSpotV2>) db.getAll(); //Poca eleganza...
+            ArrayList<ParkingSpot> spots = (ArrayList<ParkingSpot>) db.getAll(); //Poca eleganza...
             if (!spots.isEmpty()) {
-                ParkingSpotV2 tmp = spots.get(0);
+                ParkingSpot tmp = spots.get(0);
                 while(tmp != null)
                 {
                     addParking(tmp);
@@ -75,7 +75,7 @@ public class LatLongFXMLController implements Initializable {
         });
     }
 
-    private void addParking(ParkingSpotV2 tmp)
+    private void addParking(ParkingSpot tmp)
     {
         int type = 1;
         if (tmp.used != false && tmp.resident == true)
@@ -133,7 +133,7 @@ public class LatLongFXMLController implements Initializable {
         Marker marker = new Marker(options);
 
         try {
-            db.addData(new ParkingSpotV2(-1, (new Random()).nextBoolean(), (new Random()).nextBoolean(), pos.getLatitude(), pos.getLongitude(), (new Random()).nextInt(3)-2, ""));
+            db.addData(new ParkingSpot(-1, (new Random()).nextBoolean(), (new Random()).nextBoolean(), pos.getLatitude(), pos.getLongitude(), (new Random()).nextInt(3)-2, ""));
         } catch (Exception e) {
             e.printStackTrace();
         }
