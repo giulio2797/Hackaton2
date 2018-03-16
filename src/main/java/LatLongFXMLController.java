@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import com.lynden.gmapsfx.util.MarkerImageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -46,8 +47,8 @@ public class LatLongFXMLController implements Initializable {
             public void run() {
                 Spots.clear();
                 ResultSet results = DB.executeQuery("select * from filari", con);
-                try{
-                    while (results.next()){
+                try {
+                    while (results.next()) {
                         int filareId = results.getInt(1);
                         int id = results.getInt(2);
                         boolean occupied = results.getBoolean(1);
@@ -58,11 +59,13 @@ public class LatLongFXMLController implements Initializable {
                         ParkingSpot parkingSpot = new ParkingSpot(filareId, id, arrivalTime, targa, lat, lon, occupied);
                         Spots.add(parkingSpot);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }, 10*1000);
+        }, 10 * 1000);
+
+
         MapOptions mapOptions = new MapOptions();
 
         mapOptions.center(new LatLong(46.071358, 11.124731))  //Trento centro
@@ -77,8 +80,8 @@ public class LatLongFXMLController implements Initializable {
 
             latitudeLabel.setText(formatter.format(lat));
             longitudeLabel.setText(formatter.format(lon));
-//            map.clearMarkers();
-//            map.addMarker(createMarker(latLong));
+            map.clearMarkers();
+            map.addMarker(createMarker(latLong));
         });
     }
 
@@ -86,6 +89,7 @@ public class LatLongFXMLController implements Initializable {
     {
         MarkerOptions options = new MarkerOptions();
         options.position(pos);
+        options.icon((new MarkerImageFactory()).createMarkerImage("/blue.png", "png"));
         Marker marker = new Marker(options);
 
 
