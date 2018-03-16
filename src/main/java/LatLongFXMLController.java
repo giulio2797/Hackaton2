@@ -1,5 +1,7 @@
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
+import com.lynden.gmapsfx.javascript.event.StateEventHandler;
+import com.lynden.gmapsfx.javascript.event.UIEventHandler;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 
@@ -11,11 +13,14 @@ import com.lynden.gmapsfx.util.MarkerImageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.util.Callback;
+import netscape.javascript.JSObject;
 
 public class LatLongFXMLController implements Initializable {
 
     @FXML
     private Label latitudeLabel;
+    Random rn;
 
     @FXML
     private Label longitudeLabel;
@@ -24,7 +29,7 @@ public class LatLongFXMLController implements Initializable {
     private GoogleMapView googleMapView;
 
     private GoogleMap map;
-
+    private List<Marker> localMarkers;
     private DecimalFormat formatter = new DecimalFormat("###.00000");
 
     SQLiteHandler db;
@@ -32,6 +37,8 @@ public class LatLongFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        localMarkers = new ArrayList<>();
+        rn = new Random();
         mapOptions = new MapOptions();
         db = new SQLiteHandler();
         googleMapView.addMapInializedListener(() -> configureMap());
@@ -73,7 +80,34 @@ public class LatLongFXMLController implements Initializable {
            // map.clearMarkers();
             map.addMarker(createMarker(latLong, 1));
         });
+
+        map.addMarkers(localMarkers, UIEventType.click, new Callback<Marker, UIEventHandler>() {
+            @Override
+            public UIEventHandler call(Marker param) {
+                return new UIEventHandler() {
+                    @Override
+                    public void handle(JSObject jso) {
+                        displayInfoWindow(new LatLong((JSObject) jso.getMember("latLng")), param);
+                    }
+                };
+            }
+        });
     }
+
+    private char randomLetter()
+    {
+        return (char)(rn.nextInt('Z'-'A') + 'A');
+    }
+    InfoWindow window;
+    private void displayInfoWindow(LatLong loc, Marker m) {
+        if (window != null ){window.close();}
+        InfoWindowOptions infoOptions = new InfoWindowOptions();
+        infoOptions.content("<p>Licence plate: " + randomLetter() + randomLetter() + (rn.nextInt(900) + 100) + randomLetter() + randomLetter() + "</p><p>At parking number: " + rn.nextInt(2000) + "</p>" +
+                "<p>Since: "+ (rn.nextInt(23) + 2) + ":" + rn.nextInt(60) +" </p>");
+        window = new InfoWindow(infoOptions);
+        window.open(map, m);
+    }
+
 
     private void addParking(ParkingSpot tmp)
     {
@@ -107,6 +141,7 @@ public class LatLongFXMLController implements Initializable {
         }
 
         Marker marker = new Marker(options);
+        localMarkers.add(marker);
         return marker;
     }
 
@@ -138,7 +173,7 @@ public class LatLongFXMLController implements Initializable {
             e.printStackTrace();
         }
 
-
+        localMarkers.add(marker);
         return marker;
     }
 }
